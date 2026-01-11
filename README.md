@@ -1,3 +1,2 @@
 # Portfolio_Jayakumar
-Portfolio
-Hello giys
+This is my Portfolio having my research work,Blogs, Personal projects and dev stuff.
