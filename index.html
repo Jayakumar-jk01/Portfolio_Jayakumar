@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Jayakumar B</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #000000;
+            color: #FFFFFF;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 5%;
+            z-index: 1000;
+            border-bottom: 1px solid #FFFFFF;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: flex-end;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #FFFFFF;
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .profile-image-top {
+            position: absolute;
+            top: 100px;
+            left: 5%;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid #FFFFFF;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+            z-index: 999;
+        }
+
+        .profile-image-top img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, #FFFFFF 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.05;
+            animation: drift 20s linear infinite;
+        }
+
+        @keyframes drift {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+            letter-spacing: -2px;
+        }
+
+        .hero p {
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            opacity: 0.8;
+            animation: fadeInUp 1s ease 0.2s backwards;
+            letter-spacing: 2px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section {
+            padding: 6rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 3rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+            line-height: 1.8;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .skill {
+            background: #FFFFFF;
+            color: #000000;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .skill:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: #FFFFFF;
+            color: #000000;
+            padding: 2.5rem;
+            border-radius: 10px;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-detail {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease, margin 0.5s ease;
+            background: #FFFFFF;
+            color: #000000;
+            border-radius: 10px;
+            margin-top: 0;
+        }
+
+        .project-detail.expanded {
+            max-height: 3000px;
+            padding: 3rem;
+            margin-top: 2rem;
+        }
+
+        .project-detail h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .project-detail h3:first-child {
+            margin-top: 0;
+        }
+
+        .project-detail p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+
+        .project-detail ul {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 2rem;
+        }
+
+        .project-detail li {
+            padding-left: 2rem;
+            margin-bottom: 1rem;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .project-detail li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            font-weight: 700;
+        }
+
+        .tech-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .tech-badge {
+            background: #000000;
+            color: #FFFFFF;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .close-project {
+            background: #000000;
+            color: #FFFFFF;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.95rem;
+            margin-top: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .close-project:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .project-card:hover::before {
+            left: 100%;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(255, 255, 255, 0.2);
+        }
+
+        .project-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-card p {
+            opacity: 0.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-tag {
+            display: inline-block;
+            background: #000000;
+            color: #FFFFFF;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-right: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .contact {
+            text-align: center;
+            background: #FFFFFF;
+            color: #000000;
+            padding: 6rem 5%;
+            margin-top: 4rem;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .contact-btn {
+            background: #000000;
+            color: #FFFFFF;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: 2px solid #000000;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .contact-btn:hover {
+            background: transparent;
+            color: #000000;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 1.5rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 4rem 5%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-image-top">
+        <img src="mypic.png" alt="Profile">
+    </div>
+
+    <nav>
+        <ul>
+            <li><a href="#home">HOME</a></li>
+            <li><a href="#about">ABOUT</a></li>
+            <li><a href="#projects">PROJECTS</a></li>
+            <li><a href="#contact">CONTACT</a></li>
+        </ul>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Jayakumar B</h1>
+            <p> Engineering Under Construction</p>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2>About Me</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>I am an Associate Cyber Security Engineer at Visa with a strong passion for artificial intelligence research, mathematics, and software engineering.
+
+My long-term goal is to work in AI Safety and Alignment, focusing on building robust, interpretable, and human-aligned AI systems, with particular interest in safe model behavior and scalable alignment.
+
+Outside of work, I love contributing to open-source AI projects, tools, and libraries, and enjoy exploring machine learning, deep learning, and research engineering problems and ideas to grow as an AI research engineer with strong theoretical and engineering foundations.</p>
+
+                <div class="skills">
+                    <span class="skill">Mathematics</span>
+                    <span class="skill">AWS</span>
+                    <span class="skill">Programming</span>
+                    <span class="skill">AI</span>
+                    <span class="skill">Security</span>
+                    <span class="skill">Software Engineering</span>
+                </div>
+            </div>
+            <div class="about-image">
+                
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2>Project Work......</h2>
+        <div class="projects-grid">
+            <div>
+                <!-- <div class="project-card" onclick="toggleProject('alpha')">
+                    <h3>Project Alpha</h3>
+                    <p>A comprehensive rebranding initiative for a tech startup, including visual identity, website design, and marketing materials.</p>
+                    <span class="project-tag">Branding</span>
+                    <span class="project-tag">Web Design</span>
+                </div>
+                <div id="project-alpha" class="project-detail">
+                    <h3>Overview</h3>
+                    <p>A comprehensive rebranding initiative that transformed a growing tech startup's entire visual identity and digital presence. This project encompassed everything from initial brand strategy to the final website launch.</p>
+                    
+                    <h3>The Challenge</h3>
+                    <p>The client needed a bold, modern brand that would stand out in the competitive tech landscape while maintaining professional credibility. Their existing identity felt dated and didn't reflect the innovative solutions they were offering.</p>
+                    
+                    <h3>The Solution</h3>
+                    <p>We developed a complete brand system including logo design, color palette, typography guidelines, and a fully responsive website. The new identity balances professionalism with forward-thinking design, using clean lines and bold typography to create immediate impact.</p>
+                    
+                    <h3>Results & Impact</h3>
+                    <ul>
+                        <li>150% increase in brand recognition within six months</li>
+                        <li>Brand guidelines adopted across 5 international offices</li>
+                        <li>Featured in Design Week magazine</li>
+                        <li>43% increase in website engagement</li>
+                    </ul>
+                    
+                    <h3>Technologies Used</h3>
+                    <div class="tech-badges">
+                        <span class="tech-badge">Adobe Creative Suite</span>
+                        <span class="tech-badge">Figma</span>
+                        <span class="tech-badge">React</span>
+                        <span class="tech-badge">CSS3</span>
+                    </div>
+                    
+                    <button class="close-project" onclick="toggleProject('alpha')">Close</button>
+                </div> -->
+            </div>
+
+            <div>
+                <!-- <div class="project-card" onclick="toggleProject('beta')">
+                    <h3>Project Beta</h3>
+                    <p>Mobile app design focused on seamless user experience and intuitive navigation for a wellness platform.</p>
+                    <span class="project-tag">UI/UX</span>
+                    <span class="project-tag">Mobile</span>
+                </div>
+                <div id="project-beta" class="project-detail">
+                    <h3>Overview</h3>
+                    <p>An intuitive mobile application designed to help users track their wellness journey with personalized recommendations and seamless user experience. The app needed to be engaging for daily use while maintaining simplicity.</p>
+                    
+                    <h3>The Challenge</h3>
+                    <p>Creating an app that would be engaging enough for daily use while maintaining simplicity and not overwhelming users with too many features. The wellness space is crowded, and we needed to differentiate through exceptional UX.</p>
+                    
+                    <h3>The Solution</h3>
+                    <p>We focused on a minimalist design approach with micro-interactions, gamification elements, and a clean information architecture that guides users naturally through their wellness journey. Every screen was designed with the user's mental state in mind.</p>
+                    
+                    <h3>Results & Impact</h3>
+                    <ul>
+                        <li>4.8 star rating on App Store</li>
+                        <li>50,000+ active daily users</li>
+                        <li>30% increase in user retention</li>
+                        <li>Featured as "App of the Day"</li>
+                    </ul>
+                    
+                    <h3>Technologies Used</h3>
+                    <div class="tech-badges">
+                        <span class="tech-badge">Sketch</span>
+                        <span class="tech-badge">Principle</span>
+                        <span class="tech-badge">Swift UI</span>
+                        <span class="tech-badge">Firebase</span>
+                    </div>
+                    
+                    <button class="close-project" onclick="toggleProject('beta')">Close</button>
+                </div> -->
+            </div>
+
+            <div>
+                <!-- <div class="project-card" onclick="toggleProject('gamma')">
+                    <h3>Project Gamma</h3>
+                    <p>E-commerce platform redesign that increased conversion rates by 45% through strategic UX improvements.</p>
+                    <span class="project-tag">E-commerce</span>
+                    <span class="project-tag">Development</span>
+                </div>
+                <div id="project-gamma" class="project-detail">
+                    <h3>Overview</h3>
+                    <p>A complete UX overhaul of an established e-commerce platform, focusing on streamlining the purchase journey and improving conversion rates. The platform had strong traffic but poor conversion metrics.</p>
+                    
+                    <h3>The Challenge</h3>
+                    <p>The existing platform had a high cart abandonment rate and users were getting lost in the checkout process. Mobile performance was particularly poor, losing potential sales from the fastest-growing segment.</p>
+                    
+                    <h3>The Solution</h3>
+                    <p>We conducted extensive user research, simplified the navigation, redesigned the checkout flow to be a single-page experience, and optimized for mobile shopping. We implemented smart product recommendations and streamlined the payment process.</p>
+                    
+                    <h3>Results & Impact</h3>
+                    <ul>
+                        <li>45% increase in conversion rate</li>
+                        <li>60% reduction in cart abandonment</li>
+                        <li>2.5x increase in mobile sales</li>
+                        <li>Average order value increased by 22%</li>
+                    </ul>
+                    
+                    <h3>Technologies Used</h3>
+                    <div class="tech-badges">
+                        <span class="tech-badge">Figma</span>
+                        <span class="tech-badge">React</span>
+                        <span class="tech-badge">Node.js</span>
+                        <span class="tech-badge">Stripe API</span>
+                    </div>
+                    
+                    <button class="close-project" onclick="toggleProject('gamma')">Close</button>
+                </div> -->
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <h2>Let's Connect </h2>
+        <p style="font-size: 1.2rem; opacity: 0.8; margin-bottom: 3rem;">Explore My Profiles.</p>
+        <div class="contact-links">
+            <a href="mailto:jayakumarbjk01@gmail.com" class="contact-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 8px;">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                Email
+            </a>
+            <a href="https://www.linkedin.com/in/jayakumar-b-716684200/" target="_blank" class="contact-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 8px;">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                    <rect x="2" y="9" width="4" height="12"></rect>
+                    <circle cx="4" cy="4" r="2"></circle>
+                </svg>
+                LinkedIn
+            </a>
+            <!-- <a href="https://twitter.com/yourhandle" target="_blank" class="contact-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 8px;">
+                    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                </svg>
+                X
+            </a> -->
+            <a href="https://github.com/Jayakumar-jk01" target="_blank" class="contact-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 8px;">
+                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                </svg>
+                GitHub
+            </a>
+        </div>
+    </section>
+
+    <script>
+        function toggleProject(projectId) {
+            const project = document.getElementById('project-' + projectId);
+            const allProjects = document.querySelectorAll('.project-detail');
+            
+            // Close all other projects
+            allProjects.forEach(p => {
+                if (p.id !== 'project-' + projectId) {
+                    p.classList.remove('expanded');
+                }
+            });
+            
+            // Toggle the clicked project
+            project.classList.toggle('expanded');
+            
+            // Smooth scroll to project if opening
+            if (project.classList.contains('expanded')) {
+                setTimeout(() => {
+                    project.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 100);
+            }
+        }
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
